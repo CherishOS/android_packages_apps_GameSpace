@@ -20,7 +20,7 @@ import android.provider.Settings;
 import android.os.UserHandle;
 import android.util.AttributeSet;
 
-import com.cherish.settings.preferences.SelfRemovingSwitchPreference;
+import com.cherish.settings.preferences.*;
 
 public class SystemSettingSwitchPreference extends SelfRemovingSwitchPreference {
 
