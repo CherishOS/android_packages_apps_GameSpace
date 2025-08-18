@@ -35,31 +35,24 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.window.SplashScreen;
 
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import io.chaldeaprjkt.gamespace.R;
 
 public class QuickStartAppView extends LinearLayout {
-    private RecyclerView recyclerView;
+
+    private ImageView appIcon1;
+    private ImageView appIcon2;
+    private ImageView appIcon3;
+    private ImageView appIcon4;
     private Context mContext;
     private SettingsContentObserver mObserver;
     private PackageManager mPackageManager;
@@ -83,7 +76,10 @@ public class QuickStartAppView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        recyclerView = findViewById(R.id.quick_start_app_list);
+        appIcon1 = findViewById(R.id.app_icon_1);
+        appIcon2 = findViewById(R.id.app_icon_2);
+        appIcon3 = findViewById(R.id.app_icon_3);
+        appIcon4 = findViewById(R.id.app_icon_4);
         updateAppIcons();
     }
 
@@ -113,12 +109,33 @@ public class QuickStartAppView extends LinearLayout {
     }
 
     private void setupAppIcons(String[] packages) {
-        recyclerView.setHasFixedSize(true);//设置固定大小
-        recyclerView.setItemAnimator(new DefaultItemAnimator());//设置默认动画
-        LinearLayoutManager mLayoutManage = new LinearLayoutManager(mContext);
-        mLayoutManage.setOrientation(RecyclerView.HORIZONTAL);//设置滚动方向，横向滚动
-        recyclerView.setLayoutManager(mLayoutManage);
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(recyclerView, Arrays.asList(packages)));
+        hideAllIcons();
+        for (int i = 0; i < packages.length; i++) {
+            String packageName = packages[i];
+            switch (i) {
+                case 0:
+                    setupAppIcon(appIcon1, packageName);
+                    break;
+                case 1:
+                    setupAppIcon(appIcon2, packageName);
+                    break;
+                case 2:
+                    setupAppIcon(appIcon3, packageName);
+                    break;
+                case 3:
+                    setupAppIcon(appIcon4, packageName);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void hideAllIcons() {
+        appIcon1.setVisibility(GONE);
+        appIcon2.setVisibility(GONE);
+        appIcon3.setVisibility(GONE);
+        appIcon4.setVisibility(GONE);
     }
 
     private void setupAppIcon(ImageView imageView, @Nullable String packageName) {
@@ -147,14 +164,20 @@ public class QuickStartAppView extends LinearLayout {
         Display display = windowManager.getDefaultDisplay();
         Point screenSize = new Point();
         display.getSize(screenSize);
+        int halfWidth = screenSize.x / 2;
+        int halfHeight = screenSize.y / 2;
         Configuration configuration = mContext.getResources().getConfiguration();
-
-        int centerX = screenSize.x / 2;
-        int centerY = screenSize.y / 2;
-        int width = Math.min(screenSize.x, screenSize.y) * 1 / 2;
-        int height = Math.max(screenSize.x, screenSize.y) * 1 / 2;
-        Rect launchBounds = new Rect(centerX - width / 2, centerY - height / 2, centerX + width / 2, centerY + height / 2);
-        
+        boolean isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
+        Rect launchBounds;
+        if (isLandscape) {
+            launchBounds = new Rect(0, 0, halfWidth, halfHeight);
+        } else {
+            int centerX = screenSize.x / 2;
+            int centerY = screenSize.y / 2;
+            int width = Math.min(screenSize.x, screenSize.y) * 3 / 4;
+            int height = width;
+            launchBounds = new Rect(centerX - width / 2, centerY - height / 2, centerX + width / 2, centerY + height / 2);
+        }
         mActivityOptions.setLaunchBounds(launchBounds);
         mActivityOptions.setTaskAlwaysOnTop(true);
         mActivityOptions.setSplashScreenStyle(SplashScreen.SPLASH_SCREEN_STYLE_ICON);
@@ -184,53 +207,5 @@ public class QuickStartAppView extends LinearLayout {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mContext.getContentResolver().unregisterContentObserver(mObserver);
-    }
-
-    public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.RecyclerHolder> {
-        private Context mContext;
-        private List<String> dataList = new ArrayList<>();
-
-        public MyRecyclerViewAdapter(RecyclerView recyclerView) {
-            this.mContext = recyclerView.getContext();
-        }
-
-        public MyRecyclerViewAdapter(RecyclerView recyclerView, List<String> dataList) {
-            this.mContext = recyclerView.getContext();
-            setData(dataList);
-        }
-
-        public void setData(List<String> dataList) {
-            if (null != dataList) {
-                this.dataList.clear();
-                this.dataList.addAll(dataList);
-                notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.quick_start_app_item, parent, false);
-            return new RecyclerHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerHolder holder, int position) {
-            setupAppIcon(holder.imageView, dataList.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return dataList.size();
-        }
-
-        class RecyclerHolder extends RecyclerView.ViewHolder {
-            ImageView imageView;
-
-            private RecyclerHolder(View itemView) {
-                super(itemView);
-                imageView = itemView.findViewById(R.id.app_icon);
-                imageView.setVisibility(GONE);
-            }
-        }
     }
 }

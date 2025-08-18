@@ -67,7 +67,11 @@ public class QuickStartAppPreferenceDialogFragment extends PreferenceDialogFragm
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         String selectedApp = appPackageNames[which];
                         if (isChecked) {
-                            selectedPackages.add(selectedApp);
+                            if (selectedPackages.size() < 4) {
+                                selectedPackages.add(selectedApp);
+                            } else {
+                                ((AlertDialog) dialog).getListView().setItemChecked(which, false);
+                            }
                         } else {
                             selectedPackages.remove(selectedApp);
                         }
@@ -88,10 +92,11 @@ public class QuickStartAppPreferenceDialogFragment extends PreferenceDialogFragm
     private void saveSelectedApps(Context context) {
         String[] selectedArray = selectedPackages.toArray(new String[0]);
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < selectedArray.length; i++) {
-            sb.append(selectedArray[i]);
-
-            if (i < selectedArray.length - 1) {
+        for (int i = 0; i < 4; i++) {
+            if (i < selectedArray.length) {
+                sb.append(selectedArray[i]);
+            }
+            if (i < 3) {
                 sb.append(",");
             }
         }
