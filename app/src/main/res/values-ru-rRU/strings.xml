@@ -96,13 +96,13 @@
     <string name="game_cache_management_title">Cache Management</string>
     <string name="game_cache_management_summary">Optimize game cache for faster loading times</string>
     <string-array name="game_load_priority_entries">
-        <item>Balanced (Recommended)</item>
+        <item>Сбалансированный (рекомендуется)</item>
         <item>Maximum Performance</item>
         <item>Power Saving</item>
     </string-array>
     <string-array name="game_load_priority_values">
         <item>balanced</item>
         <item>performance</item>
-        <item>powersave</item>
+        <item>энергосберегающий</item>
     </string-array>
 </resources>
