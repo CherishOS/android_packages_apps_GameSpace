@@ -16,7 +16,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="settings_title">Поиграем?</string>
+    <string name="settings_title">Игровое Пространство</string>
     <string name="settings_summary">Настройка игровых возможностей</string>
     <!-- Game options -->
     <string name="in_game_preferences_title">Настройки игры</string>
@@ -78,7 +78,7 @@
     <string name="in_game_calls_title">Режим вызова</string>
     <string name="in_game_calls_no_action">Без действия</string>
     <string name="in_game_calls_auto_answer">Автоответ</string>
-    <string name="in_game_calls_auto_reject">Автосброс</string>
+    <string name="in_game_calls_auto_reject">Авто сброс</string>
     <string name="in_game_calls_received_number">Поступил звонок от %1$s</string>
     <string name="in_game_calls_rejected_number">Отклонён вызов от %1$s</string>
     <!-- Danmaku Notification Mode -->
@@ -86,23 +86,23 @@
     <string name="danmaku_notification_mode_summary">Показывать уведомление в виде прозрачных комментариев, пока игра активна</string>
     <string name="gamespace_running">Игровое пространство запущено</string>
     <!-- Game Optimization -->
-    <string name="game_optimization_title">Launch Optimization</string>
-    <string name="game_launch_boost_title">Launch Boost</string>
-    <string name="game_launch_boost_summary">Optimize CPU and memory for faster game launch</string>
-    <string name="game_memory_management_title">Smart Memory Management</string>
-    <string name="game_memory_management_summary">Automatically clear background apps when launching games</string>
-    <string name="game_load_priority_title">Loading Priority</string>
-    <string name="game_load_priority_summary">Set resource priority during game launch</string>
-    <string name="game_cache_management_title">Cache Management</string>
-    <string name="game_cache_management_summary">Optimize game cache for faster loading times</string>
+    <string name="game_optimization_title">Оптимизация Запуска</string>
+    <string name="game_launch_boost_title">Ускорение Запуска</string>
+    <string name="game_launch_boost_summary">Оптимизация ЦП и памяти для быстрого запуска игры</string>
+    <string name="game_memory_management_title">Умное Управление Памятью</string>
+    <string name="game_memory_management_summary">Автоматически очищать фоновые приложения при запуске игр</string>
+    <string name="game_load_priority_title">Приоритет Загрузки</string>
+    <string name="game_load_priority_summary">Установить приоритет ресурсов при запуске игры</string>
+    <string name="game_cache_management_title">Управление Кэшем</string>
+    <string name="game_cache_management_summary">Оптимизировать кэш игры для более быстрого запуска</string>
     <string-array name="game_load_priority_entries">
         <item>Сбалансированный (рекомендуется)</item>
-        <item>Maximum Performance</item>
-        <item>Power Saving</item>
+        <item>Максимальная Производительность</item>
+        <item>Энергосбережение</item>
     </string-array>
     <string-array name="game_load_priority_values">
-        <item>balanced</item>
-        <item>performance</item>
+        <item>сбалансированный</item>
+        <item>производительный</item>
         <item>энергосберегающий</item>
     </string-array>
 </resources>
